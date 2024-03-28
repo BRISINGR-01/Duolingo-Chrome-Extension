@@ -1,4 +1,26 @@
 window.addEventListener("load", searchForWords);
+navigation.addEventListener("navigate", searchForWords);
+let keyInterval, key, isHolding;
+window.addEventListener("keydown", (e) => {
+	const toEnd = e.shiftKey;
+	if (isHolding) return;
+
+	isHolding = !toEnd;
+	key = e.key;
+	onKey(key, toEnd);
+	setTimeout(() => {
+		if (isHolding) {
+			keyInterval = setInterval(() => {
+				if (!isHolding) return clearInterval(keyInterval);
+				onKey(key, toEnd);
+			}, 100);
+		}
+	}, 50);
+});
+window.addEventListener("keyup", (e) => {
+	clearInterval(keyInterval);
+	isHolding = false;
+});
 
 function searchForWords() {
 	const i = setInterval(() => {
@@ -13,26 +35,54 @@ function searchForWords() {
 let current, words;
 
 function setUp(wordBank) {
-	words = wordBank.children;
+	words = [...wordBank.children];
 
-	current = words[0];
+	current =
+		words.find((w) => {
+			let letter = w.children[0].children[0].children[1].innerText[0];
+			if (letter === letter.toUpperCase()) return true;
+		}) || words[0];
+
+	focus(current);
 }
 
-window.addEventListener("keyup", (e) => onkeydown(e));
-
-function onkeydown(e) {
-	switch (e.key) {
+function onKey(key, toEnd) {
+	switch (key) {
 		case "ArrowRight":
-			move("r");
+			if (toEnd) {
+				while (toEnd) {
+					toEnd = !move("r");
+				}
+			} else {
+				move("r");
+			}
 			break;
 		case "ArrowLeft":
-			move("l");
+			if (toEnd) {
+				while (toEnd) {
+					toEnd = !move("l");
+				}
+			} else {
+				move("l");
+			}
 			break;
 		case "ArrowUp":
-			move("u");
+			if (toEnd) {
+				while (toEnd) {
+					toEnd = !move("u");
+				}
+			} else {
+				move("u");
+			}
 			break;
 		case "ArrowDown":
-			move("d");
+			if (toEnd) {
+				while (toEnd) {
+					toEnd = !move("d");
+				}
+			} else {
+				move("d");
+			}
 			break;
 		case " ":
 			if (current) {
@@ -111,7 +161,7 @@ function move(dir) {
 			break;
 	}
 	const el = elelemnts.find((el) => el.nodeName === "BUTTON");
-	if (el.children[0].nodeName !== "SPAN") return true;
+	if (!el || el.children[0].nodeName !== "SPAN") return true;
 
 	if (el.ariaDisabled === "true") {
 		focus(el.parentNode.parentNode);
