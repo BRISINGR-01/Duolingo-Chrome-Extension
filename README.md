@@ -5,4 +5,4 @@ After [loading](https://support.google.com/chrome/a/answer/2714278?hl=en#:~:text
 ## Exercises where you form a sentence from a bank of words
 You can now use the arrow keys to choose a wordand with space you select the word.
 
-Words with [this extention](https://chromewebstore.google.com/detail/extension-for-duolingo/imkilagmimmnfcicabegllpcfbjkhdci) - if you start typing and you have two or more options you move to the first word.
+Works with [this extention](https://chromewebstore.google.com/detail/extension-for-duolingo/imkilagmimmnfcicabegllpcfbjkhdci) - if you start typing and you have two or more options you move to the first word.
